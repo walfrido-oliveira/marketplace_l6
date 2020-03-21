@@ -56,7 +56,6 @@
 
 @section('scripts')
     <script src="https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"></script>
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js" ></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script>
         const sessionId = '{{ session()->get('pagseguro_sesion_code') }}';
