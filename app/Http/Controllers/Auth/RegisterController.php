@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use Illuminate\Http\Request;
+use App\Mail\UserRegisteredEmail;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -81,6 +83,8 @@ class RegisterController extends Controller
      */
     protected function registered(Request $request, $user)
     {
+        Mail::to($user->email)->send(new UserRegisteredEmail($user));
+
         if(session()->has('cart')) {
             return redirect()->route('checkout.index');
         }

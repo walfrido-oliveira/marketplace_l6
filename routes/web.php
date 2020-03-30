@@ -61,3 +61,20 @@ Route::group(['middleware' => ['auth']], function () {
 
 Auth::routes();
 
+Route::get('not', function(){
+    $user = \App\User::find(39);
+
+    //$user->notify(new App\Notifications\StoreReceiveNewOrder());
+
+    //$notification = $user->notifications->first();
+    //$notification->markAsread();
+
+    $stores = [43, 41, 30];
+
+    $stores = \App\Store::whereIn('id', $stores)->get();
+
+    return $stores->map(function($store){
+        return $store->user;
+    });
+    return $user->readNotifications;
+});
