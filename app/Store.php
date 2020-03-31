@@ -2,9 +2,10 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use Illuminate\Database\Eloquent\Model;
+use App\Notifications\StoreReceiveNewOrder;
 
 class Store extends Model
 {
@@ -58,6 +59,18 @@ class Store extends Model
         return SlugOptions::create()
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
+    }
+
+    /**
+     *
+     */
+    public function notifyStoreOwers(array $storesId = [])
+    {
+        $stores = $this::whereIn('id', $storesId)->get();
+
+        return $stores->map(function($store){
+            return $store->user;
+        })->each->notify(new StoreReceiveNewOrder());
     }
 
 }

@@ -52,7 +52,7 @@ class CreditCard
         $user = $this->user;
         $email = env('PAGSEGURO_ENV') == 'sandbox' ? 'test@sandbox.pagseguro.com.br' : $user->email;
 
-        $creditCard->setSender()->setName($user->name);
+        $creditCard->setSender()->setName($this->cardInfo['card_name']);
         $creditCard->setSender()->setEmail($email);
         $creditCard->setSender()->setPhone()->withParameters(
             11,
